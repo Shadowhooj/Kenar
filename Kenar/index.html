@@ -63,8 +63,8 @@
       }
     </style>
     <!--
-      This import map tells the browser exactly where to find external libraries.
-      It has been corrected to only load React 18, fixing the crash.
+      This import map is now corrected. The conflicting React 19 entries
+      have been removed, which was the cause of the crash.
     -->
     <script type="importmap">
 {
@@ -82,10 +82,7 @@
     <div id="root"></div>
     <!--
       This script uses esm.sh to compile your code from GitHub.
-      - `?bundle` tells it to package all your local files (.tsx, .ts) together.
-      - `&external=...` tells it to NOT bundle the big libraries, and let the
-        browser load them using the import map above.
-      - This combination fixes the "Cannot find module" error.
+      It knows to use the import map above for external libraries.
     -->
     <script type="module" src="https://esm.sh/gh/shadowhooj/Kenar/index.tsx?bundle&external=react,react-dom/client,@google/genai"></script>
   </body>
