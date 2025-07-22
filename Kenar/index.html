@@ -61,17 +61,33 @@
         transform: translate(-50%, -50%) scale(0);
         transition: transform 0s;
       }
-
     </style>
+    <!--
+      This import map tells the browser where to find external libraries.
+      The esm.sh script below is told to treat these as "external", so the browser
+      will use these mappings to load them correctly.
+    -->
+    <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@18.2.0",
+    "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+    "@google/genai": "https://esm.sh/@google/genai",
+    "react-dom/": "https://esm.sh/react-dom@^19.1.0/",
+    "react/": "https://esm.sh/react@^19.1.0/"
+  }
+}
+</script>
   </head>
   <body class="bg-black text-white antialiased">
     <div id="root"></div>
     <!--
-      The original <script type="module" src="index.tsx"> fails because browsers can't
-      run TSX files directly. This new script tag uses the esm.sh service to
-      fetch your index.tsx file directly from your GitHub repo, compile it
-      (and all its imports) to standard JavaScript, and then run it.
+      This script uses esm.sh to compile your code from GitHub.
+      - `?bundle` tells it to package all your local files (.tsx, .ts) together.
+      - `&external=...` tells it to NOT bundle the big libraries, and let the
+        browser load them using the import map above.
+      - This combination fixes the "Cannot find module" error.
     -->
-    <script type="module" src="https://esm.sh/gh/shadowhooj/Kenar/index.tsx"></script>
+    <script type="module" src="https://esm.sh/gh/shadowhooj/Kenar/index.tsx?bundle&external=react,react-dom/client,@google/genai"></script>
   </body>
 </html>
