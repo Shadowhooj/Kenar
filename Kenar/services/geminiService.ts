@@ -1,12 +1,17 @@
-
 import { GoogleGenAI } from "@google/genai";
 
-// Ensure the API key is available, but do not handle its input in the UI.
-if (!process.env.API_KEY) {
-    console.error("API_KEY environment variable not set.");
+// =================================================================
+// PASTE YOUR GOOGLE GEMINI API KEY HERE
+// You can get a free key from Google AI Studio.
+const API_KEY = "PASTE_YOUR_API_KEY_HERE";
+// =================================================================
+
+// This check is for the user-provided key.
+if (API_KEY === "PASTE_YOUR_API_KEY_HERE") {
+    console.error("API Key not provided. Please edit services/geminiService.ts and add your key.");
 }
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY! });
+const ai = new GoogleGenAI({ apiKey: API_KEY });
 const model = "gemini-2.5-flash";
 
 // Function to convert base64 data URL to the format Gemini expects
@@ -25,6 +30,11 @@ const fileToGenerativePart = (dataUrl: string) => {
 };
 
 export const generateCaptionsForImage = async (base64ImageDataUrl: string): Promise<string[]> => {
+    // If no API key is provided, return instructive captions immediately.
+    if (API_KEY === "PASTE_YOUR_API_KEY_HERE") {
+        return ["کلید API لازم است", "فایل geminiService.ts", "را ویرایش کنید"];
+    }
+    
     try {
         const imagePart = fileToGenerativePart(base64ImageDataUrl);
         const prompt = `
