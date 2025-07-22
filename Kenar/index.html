@@ -63,9 +63,8 @@
       }
     </style>
     <!--
-      This import map tells the browser where to find external libraries.
-      The esm.sh script below is told to treat these as "external", so the browser
-      will use these mappings to load them correctly.
+      This import map tells the browser exactly where to find external libraries.
+      It has been corrected to only load React 18, fixing the crash.
     -->
     <script type="importmap">
 {
